@@ -23,18 +23,6 @@ int main(int argv, char** argc){
         return 1;
     }
 
-    /*unsigned char* data = new unsigned char[100*100*3];
-    int row_stride = 100*3;
-    int idx = 0;
-    for(int y=0;y<100;++y){
-        for(int x=0;x<100;++x){
-            idx = y*row_stride+x*3;
-            data[idx] = 0xff;
-            data[idx+1] = 0x00;
-            data[idx+1] = 0x00;
-        }
-    }*/
-
     glfwMakeContextCurrent(window);
 
     GLuint tex_handle;

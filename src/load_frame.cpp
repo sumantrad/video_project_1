@@ -121,15 +121,6 @@ bool load_frame(const char* filename, int* width_out, int* height_out, unsigned 
     sws_scale(sws_scalar_ctx,av_frame->data,av_frame->linesize,0,av_frame->height,dest, dest_linesize);
     sws_freeContext(sws_scalar_ctx);
 
-    /*unsigned char* data = new unsigned char[av_frame->width* av_frame->height * 3];
-    for(int x=0;x<av_frame->width;++x){
-        for(int y=0;y<av_frame->height;++y){
-            data[y*av_frame->width*3 +x*3] =av_frame->data[0][y*av_frame->linesize[0]+x];
-            data[y*av_frame->width*3 +x*3+1] =av_frame->data[0][y*av_frame->linesize[0]+x];
-            data[y*av_frame->width*3 +x*3+2] =av_frame->data[0][y*av_frame->linesize[0]+x];
-        }
-    }*/
-
     *width_out = av_frame->width;
     *height_out = av_frame->height;
     *data_out = data;
@@ -141,20 +132,8 @@ bool load_frame(const char* filename, int* width_out, int* height_out, unsigned 
     avcodec_free_context(&av_codec_ctx);
 
     return true;
-
-
-
-    /**width = 100;
-    *height = 100;
-    *data = new unsigned char[100*100*3];
-
-    auto ptr = *data;
-    for(int x=0;x<100;++x){
-        for(int y=0;y<100;++y){
-            *ptr++ = 0xff;
-            *ptr++ = 0x00;
-            *ptr++ = 0x00;
-        }
-    }
-    return true;*/
 }
+
+
+
+    
