@@ -17,7 +17,15 @@ static const char* av_make_error(int errnum) {
 
 bool load_frame(const char* filename, int* width_out, int* height_out, unsigned char** data_out){
 
-    AVFormatContext* av_format_ctx = avformat_alloc_context();
+    AVFormatContext* av_format_ctx;
+    AVCodecContext* av_codec_ctx;
+    AVFrame* av_frame;
+    AVPacket* av_packet;
+    SwsContext* sws_scalar_ctx;
+
+
+
+    av_format_ctx = avformat_alloc_context();
     if(!av_format_ctx){
         printf("couldn't create AVFormatContext\n");
         return false;
@@ -53,7 +61,7 @@ bool load_frame(const char* filename, int* width_out, int* height_out, unsigned 
     }
 
     //set up a codef context for the decoder
-    AVCodecContext* av_codec_ctx = avcodec_alloc_context3(av_codec);
+    av_codec_ctx = avcodec_alloc_context3(av_codec);
     if(!av_codec_ctx){
         printf("couldn't create AVCodecContext\n");
         return false;
@@ -68,13 +76,13 @@ bool load_frame(const char* filename, int* width_out, int* height_out, unsigned 
         return false;
     }
 
-    AVFrame* av_frame = av_frame_alloc();
+    av_frame = av_frame_alloc();
     if(!av_frame){
         printf("couldn't allocate avframe\n");
         return false;
     }
 
-    AVPacket* av_packet=av_packet_alloc();
+    av_packet=av_packet_alloc();
     if(!av_packet){
         printf("couldn't allocate avpacket\n");
         return false;
@@ -102,7 +110,7 @@ bool load_frame(const char* filename, int* width_out, int* height_out, unsigned 
 
     uint8_t* data = new uint8_t[av_frame->width*av_frame->height*4];
 
-    SwsContext* sws_scalar_ctx = sws_getContext(av_frame->width,
+    sws_scalar_ctx = sws_getContext(av_frame->width,
                                                av_frame->height,
                                                av_codec_ctx->pix_fmt,
                                                av_frame->width,
